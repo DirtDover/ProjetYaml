@@ -2,9 +2,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: "main" # Déclenche le déploiement à chaque push sur main
+    branches: "main"
 
-# Autorise GitHub Actions à publier sur GitHub Pages
 permissions:
   contents: read
   pages: write
@@ -18,7 +17,7 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps: deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,19 +26,22 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-on-version: 20
-          cache: 'npm'
+          node-version: 20
+          cache: "npm"
+          cache-dependency-path: "./generator-yaml/package-lock.json" # Dit à GitHub où est le lock
 
       - name: Install dependencies
         run: npm ci
+        working-directory: ./generator-yaml # Se déplace dans ton dossier
 
       - name: Build
         run: npm run build
+        working-directory: ./generator-yaml # Se déplace dans ton dossier
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist # Indique à GitHub d'aller chercher le dossier compilé par Vite
+          path: ./generator-yaml/dist # Va chercher le dossier dist au bon endroit
 
       - name: Deploy to GitHub Pages
         id: deployment
