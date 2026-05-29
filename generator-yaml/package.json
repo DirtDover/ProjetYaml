@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://DirtDover.github.io/ProjetYaml",
+  "homepage": "https://dirtdover.github.io/ProjetYaml",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
