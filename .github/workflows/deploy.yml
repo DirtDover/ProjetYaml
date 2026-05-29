@@ -31,7 +31,7 @@ jobs:
           cache-dependency-path: "./generator-yaml/package-lock.json" # Dit à GitHub où est le lock
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps # 👈 On ajoute ça ici
         working-directory: ./generator-yaml # Se déplace dans ton dossier
 
       - name: Build
